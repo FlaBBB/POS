@@ -16,10 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId("penjualan_id")
                 ->constrained("t_penjualan", "penjualan_id")
-                ->onUpdate("cascade");
+                ->onDelete("cascade");
             $table->foreignId("barang_id")
-                ->constraine("m_barang", "barang_id")
-                ->onUpdate("cascade");
+                ->constrained("m_barang", "barang_id")
+                ->onDelete("cascade");
             $table->integer("harga");
             $table->integer("jumlah");
         });

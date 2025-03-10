@@ -1,6 +1,6 @@
 <div>
     <h1>Form Tambah Data User</h1>
-    <form action="PUT" action="/user/ubah_simpan/{{ $data->user_id }}">
+    <form method="PUT" action="/user/ubah_simpan/{{ $data->user_id }}">
 
         {{ csrf_field() }}
         {{ method_field("PUT") }}

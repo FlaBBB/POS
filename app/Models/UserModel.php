@@ -12,6 +12,7 @@ class UserModel extends Model
 
     protected $table = "m_user";
     protected $primaryKey = "user_id";
+    public $incrementing = true;
 
     protected $fillable = [
         'level_id',

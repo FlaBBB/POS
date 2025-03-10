@@ -11,6 +11,7 @@ class UserController extends Controller
     public function index()
     {
         $user = UserModel::with('level')->get();
+        UserModel::firstOrNew();
         // dd($user->level->level_kode);  
 
         return view('user', ['data' => $user]);
@@ -23,7 +24,7 @@ class UserController extends Controller
 
     public function tambah_simpan(Request $request)
     {
-        UserModel::creat([
+        UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => Hash::make($request->password),

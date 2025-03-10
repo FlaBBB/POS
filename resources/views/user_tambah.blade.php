@@ -1,6 +1,6 @@
 <div>
     <h1>Form Tambah Data User</h1>
-    <form action="post" action="/user/tambah_simpan">
+    <form method="post" action="/user/tambah_simpan">
 
         {{ csrf_field() }}
 

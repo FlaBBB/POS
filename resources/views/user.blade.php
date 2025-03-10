@@ -12,6 +12,9 @@
             <td>Aksi</td>
         </tr>
         @foreach($data as $d)
+        @php
+        dd($data);
+        @endphp
         <tr>
             <td>{{ $d->user_id }}</td>
             <td>{{ $d->username }}</td>

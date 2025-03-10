@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('m_user', function (Blueprint $table) {
-            $table->id("user_id");
+            $table->id("user_id")->autoIncrement();
             $table->timestamps();
             $table->foreignId("level_id")
                 ->constrained("m_level", "level_id")
