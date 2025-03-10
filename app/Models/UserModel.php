@@ -23,6 +23,6 @@ class UserModel extends Model
 
     public function level(): HasOne
     {
-        return $this->hasOne(LevelModel::class, 'level_id');
+        return $this->hasOne(LevelModel::class, 'level_id', 'level_id');
     }
 }
