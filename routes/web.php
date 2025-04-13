@@ -3,10 +3,9 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get("/user", [UserController::class, 'index']);
 Route::get("/user/tambah", [UserController::class, 'tambah']);
