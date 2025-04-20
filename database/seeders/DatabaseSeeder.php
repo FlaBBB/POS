@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BarangSeeder::class,
             StokSeeder::class,
             TransactionSeeder::class,
+            SupplierSeeder::class,
         ]);
     }
 }
