@@ -7,6 +7,7 @@
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
             <a class="btn btn-sm btn-primary mt-1" href="{{ url('barang/create') }}">Tambah</a>
+            <button onclick="modalAction(`{{ url('barang/create_ajax') }}`)" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
@@ -47,7 +48,7 @@
         </table>
     </div>
 </div>
-
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
@@ -56,6 +57,12 @@
 @push('js')
 
 <script>
+    function modalAction(url = '') {
+        $('#myModal').load(url, function() {
+            $(this).modal('show');
+        });
+    }
+
     $(document).ready(function() {
 
         var dataBarang = $('#table_barang').DataTable({
@@ -64,12 +71,11 @@
                 "url": "{{ url('barang/list') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data": function (d) {
-                        d.kategori_id = $('#kategori_id').val();
+                "data": function(d) {
+                    d.kategori_id = $('#kategori_id').val();
                 }
             },
-            columns: [
-                {
+            columns: [{
                     data: "DT_RowIndex",
                     className: "text-center",
                     orderable: false,
@@ -95,7 +101,7 @@
                     className: "",
                     orderable: false,
                     searchable: false,
-                    render: function (data, type, row) {
+                    render: function(data, type, row) {
                         return "Rp " + new Intl.NumberFormat("id-ID").format(data);
                     }
                 },
@@ -105,7 +111,7 @@
                     className: "",
                     orderable: false,
                     searchable: false,
-                    render: function (data, type, row) {
+                    render: function(data, type, row) {
                         return "Rp " + new Intl.NumberFormat("id-ID").format(data);
                     }
                 },
@@ -126,10 +132,10 @@
             ]
         });
 
-    $('#kategori_id').change(function() {
-        dataBarang.ajax.reload();
+        $('#kategori_id').change(function() {
+            dataBarang.ajax.reload();
+        });
     });
-});
 </script>
 
 @endpush
