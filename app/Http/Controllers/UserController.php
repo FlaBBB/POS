@@ -130,6 +130,12 @@ class UserController extends Controller
         }
     }
 
+    public function show_ajax(string $id) {
+        $user = UserModel::find($id);
+
+        return view('user.show_ajax', ['user' => $user]);
+    }
+
     public function create_ajax()
     {
         $level = LevelModel::select('level_id', 'level_nama')->get();
