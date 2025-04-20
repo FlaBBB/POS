@@ -5,6 +5,7 @@
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
             <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
+            <button onclick="modalAction(`{{ url('/user/create_ajax') }}`)" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
@@ -23,7 +24,7 @@
                         <select id="level_id" class="form-control" name="level_id" required>
                             <option value="">- Semua -</option>
                             @foreach ($level as $item)
-                                <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
+                            <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
                             @endforeach
                         </select>
                         <small class="form-text text-muted">Level Pengguna</small>
@@ -46,14 +47,24 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data backdrop="static"
+    data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 @push('css')
 @endpush
 @push('js')
 <script>
+    function modalAction(url = '') {
+        $('#myModal').load(url, function() {
+            $('#myModal').modal('show');
+        });
+    }
+
+    var dataUser;
+
     $(document).ready(function() {
-        var dataUser = $('#table_user').DataTable({
-            
+        dataUser = $('#table_user').DataTable({
+
             serverSide: true,
             ajax: {
                 "url": "{{ url('user/list') }}",
@@ -63,7 +74,7 @@
                     d.level_id = $("#level_id").val();
                 }
             },
-            columns: [{ 
+            columns: [{
                 data: "DT_RowIndex",
                 className: "text-center",
                 orderable: false,
@@ -71,9 +82,9 @@
             }, {
                 data: "username",
                 className: "",
-                
+
                 orderable: true,
-                
+
                 searchable: true
             }, {
                 data: "nama",
@@ -81,7 +92,7 @@
                 orderable: true,
                 searchable: true
             }, {
-                
+
                 data: "level.level_nama",
                 className: "",
                 orderable: false,
