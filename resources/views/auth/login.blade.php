@@ -61,6 +61,9 @@
                         <!-- /.col -->
                     </div>
                 </form>
+                <div class="text-center mt-3">
+                    <p class="mb-0">Don't have an account? <a href="{{ url('/register') }}" class="text-center">Register</a></p>
+                </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -101,13 +104,13 @@
                         maxlength: 20
                     }
                 },
-                submitHandler: function(form) { // ketika valid, maka bagian yg akan dijalankan
+                submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if (response.status) { // jika sukses
+                            if (response.status) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
@@ -115,7 +118,7 @@
                                 }).then(function() {
                                     window.location = response.redirect;
                                 });
-                            } else { // jika error
+                            } else { 
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);
