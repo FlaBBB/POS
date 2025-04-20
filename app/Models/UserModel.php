@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     use HasFactory;
 
@@ -29,7 +29,7 @@ class UserModel extends Model
     ];
 
     protected $casts = [
-        ['password' => 'hashed'],
+        'password' => 'hashed',
     ];
 
     public function level(): HasOne
