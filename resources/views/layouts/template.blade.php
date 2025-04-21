@@ -68,6 +68,73 @@
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+  <div class="modal fade" id="changeAvatarModal" tabindex="-1" role="dialog"
+    aria-labelledby="changeAvatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="changeAvatarModalLabel">Ganti Foto Profil</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form id="avatarForm" enctype="multipart/form-data">
+          @csrf
+
+          <div class="modal-body">
+
+            <div class="text-center mb-4">
+              <div class="preview-container">
+                <div class="row">
+                  <div class="col-6 text-center border-right">
+                    <p class="text-muted mb-2">Foto Saat Ini</p>
+                    @if (auth()->user()->foto_profil)
+                    <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
+                      class="img-circle elevation-2" alt="Current Avatar" width="120"
+                      height="120">
+                    @else
+                    <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
+                      class="img-circle elevation-2" alt="Current Avatar" width="120"
+                      height="120">
+                    @endif
+                  </div>
+                  <div class="col-6 text-center">
+                    <p class="text-muted mb-2">Foto Baru</p>
+                    <img src="{{ asset('storage/profile/image.png') }}"
+                      class="img-circle elevation-2" alt="New Avatar" id="avatarPreview"
+                      width="120" height="120">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input File -->
+            <div class="form-group mt-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="avatarInput" name="photo"
+                  accept="image/*">
+                <label class="custom-file-label" for="avatarInput">Pilih file</label>
+              </div>
+              <small class="form-text text-muted">Format yang didukung: JPG, JPEG, PNG. Maksimum
+                2MB.</small>
+            </div>
+
+            <!-- Alert Error -->
+            <div class="alert alert-danger d-none" id="avatarError"></div>
+          </div>
+
+          <!-- Footer Modal -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="saveAvatar">Simpan</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- jQuery -->
   <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
@@ -94,7 +161,6 @@
   <!-- AdminLTE App -->
   <script src="{{ asset('adminlte/dist/js/adminlte.min.js')}} "></script>
   <script>
-    // Untuk mengirimkan token Laravel CSRF pada setiap request ajax
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -102,6 +168,96 @@
     });
   </script>
   </script>
+  @push('js')
+  <script>
+    $(function() {
+
+      $('#avatarInput').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(
+          fileName);
+
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            $('#avatarPreview').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      $('#changeAvatarModal').on('hidden.bs.modal', function() {
+        $('#avatarForm').trigger('reset');
+        $('.custom-file-label').text('Pilih file');
+        $('#avatarError').addClass('d-none').html('');
+
+        $('#avatarPreview').attr('src', `{{ asset('adminlte/dist/img/avatar.png ') }}`);
+      });
+
+      $('#avatarForm').on('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        $('#avatarError').addClass('d-none').html('');
+
+        $.ajax({
+          url: "{{ url('/profile/update-avatar') }}",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+
+          beforeSend: function() {
+            $('#saveAvatar').html(
+              '<i class="fas fa-spinner fa-spin"></i> Menyimpan...').attr(
+              'disabled', true);
+          },
+
+          success: function(response) {
+            const newPhotoUrl = response.photo_url;
+
+            $('#avatarDropdown img').attr('src', newPhotoUrl);
+            $('.dropdown-item img[alt="User Image"]').attr('src', newPhotoUrl);
+            $('.modal-body img[alt="Current Avatar"]').attr('src', newPhotoUrl);
+
+            if (typeof Swal !== 'undefined') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              alert(response.message);
+            }
+
+            $('#changeAvatarModal').modal('hide');
+          },
+
+          error: function(xhr) {
+            $('#saveAvatar').html('Simpan').attr('disabled', false);
+
+            // Tampilkan error validasi
+            if (xhr.status === 422) {
+              const errors = xhr.responseJSON.errors;
+              if (errors.photo) {
+                $('#avatarError').removeClass('d-none').html(errors.photo[0]);
+              }
+            } else {
+              $('#avatarError').removeClass('d-none').html(
+                'Terjadi kesalahan. Silakan coba lagi.');
+            }
+          },
+
+          complete: function() {
+            $('#saveAvatar').html('Simpan').attr('disabled', false);
+          }
+        });
+      });
+    });
+  </script>
+  @endpush
   @stack("js")
 </body>
 
