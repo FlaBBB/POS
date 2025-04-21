@@ -97,7 +97,7 @@
                     @else
                     <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
                       class="img-circle elevation-2" alt="Current Avatar" width="120"
-                      height="120">
+                      height="120barang
                     @endif
                   </div>
                   <div class="col-6 text-center">

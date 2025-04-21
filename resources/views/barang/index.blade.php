@@ -7,7 +7,7 @@
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
             <button onclick="modalAction(`{{ url('/barang/import') }}`)" class="btn btn-sm btn-info mt-1">Import Barang</button>
-            <a class="btn btn-sm btn-primary mt-1" href="{{ url('/barang/export_excel') }}">Export Barang</a>
+            <a class="btn btn-sm btn-primary mt-1" href="{{ url('/barang/export_excel') }}"><i class="fa fa-file-excel mr-1"></i>Export Barang Excel</a>
             <a class="btn btn-sm btn-warning mt-1" href="{{ url('/barang/export_pdf') }}"><i class="fa fa-file-pdf mr-1"></i>Export Barang PDF</a>
             <a class="btn btn-sm btn-primary mt-1" href="{{ url('barang/create') }}">Tambah</a>
             <button onclick="modalAction(`{{ url('barang/create_ajax') }}`)" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
