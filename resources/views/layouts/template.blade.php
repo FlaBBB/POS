@@ -85,28 +85,17 @@
 
           <div class="modal-body">
 
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 py-4">
               <div class="preview-container">
-                <div class="row">
-                  <div class="col-6 text-center border-right">
-                    <p class="text-muted mb-2">Foto Saat Ini</p>
-                    @if (auth()->user()->foto_profil)
-                    <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
-                      class="img-circle elevation-2" alt="Current Avatar" width="120"
-                      height="120">
-                    @else
-                    <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
-                      class="img-circle elevation-2" alt="Current Avatar" width="120"
-                      height="120barang
-                    @endif
-                  </div>
-                  <div class="col-6 text-center">
-                    <p class="text-muted mb-2">Foto Baru</p>
-                    <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
-                      class="img-circle elevation-2" alt="New Avatar" id="avatarPreview"
-                      width="120" height="120">
-                  </div>
-                </div>
+                @if (auth()->user()->foto_profil)
+                <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
+                  class="img-circle elevation-2" alt="Current Avatar" width="200"
+                  height="200">
+                @else
+                <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
+                  class="img-circle elevation-2" alt="Current Avatar" width="200"
+                  height="200">
+                @endif
               </div>
             </div>
 
