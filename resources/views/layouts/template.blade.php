@@ -90,11 +90,11 @@
                 @if (auth()->user()->foto_profil)
                 <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
                   class="img-circle elevation-2" alt="Current Avatar" width="200"
-                  height="200">
+                  height="200" id="avatarPreview">
                 @else
                 <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
                   class="img-circle elevation-2" alt="Current Avatar" width="200"
-                  height="200">
+                  height="200" id="avatarPreview">
                 @endif
               </div>
             </div>
@@ -180,7 +180,7 @@
         $('.custom-file-label').text('Pilih file');
         $('#avatarError').addClass('d-none').html('');
 
-        $('#avatarPreview').attr('src', `{{ asset('adminlte/dist/img/avatar.png ') }}`);
+        $('#avatarPreview').attr('src', `{{ asset(auth()->user()->foto_profil ? 'storage/profile/' . auth()->user()->foto_profil : 'adminlte/dist/img/avatar.png ') }}`);
       });
 
       $('#avatarForm').on('submit', function(e) {
