@@ -102,7 +102,7 @@
                   </div>
                   <div class="col-6 text-center">
                     <p class="text-muted mb-2">Foto Baru</p>
-                    <img src="{{ asset('storage/profile/image.png') }}"
+                    <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
                       class="img-circle elevation-2" alt="New Avatar" id="avatarPreview"
                       width="120" height="120">
                   </div>
