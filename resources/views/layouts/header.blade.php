@@ -133,26 +133,15 @@
         </li>
         <li class="nav-item dropdown me-6">
             <a class="nav-link" data-toggle="dropdown" href="#" id="avatarDropdown">
-                @if (auth()->user()->foto_profil)
-                <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
-                    class="img-circle elevation-2" alt="User Image" width="27" height="27">
-                @else
-                <img src="{{ asset('storage/profile/image.png') }}" class="img-circle elevation-2"
-                    alt="User Image" width="30" height="30">
-                @endif
+                <img src="{{ asset(auth()->user()->foto_profil ? 'storage/profile/' . auth()->user()->foto_profil : 'adminlte/dist/img/avatar.png ') }}"
+                    class="img-circle elevation-2" alt="User Image" width="30" height="30">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="dropdown-item text-center">
                     <div class="image">
-                        @if (auth()->user()->foto_profil)
-                        <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
+                        <img src="{{ asset(auth()->user()->foto_profil ? 'storage/profile/' . auth()->user()->foto_profil : 'adminlte/dist/img/avatar.png ') }}"
                             class="img-circle elevation-2" alt="User Image" width="100"
                             height="100">
-                        @else
-                        <img src="{{ asset('storage/profile/image.png') }}" 
-                            class="img-circle elevation-2" alt="User Image" width="100"
-                            height="100">
-                        @endif
                     </div>
                     <p class="mt-2">{{ auth()->user()->nama }}</p>
                 </div>
